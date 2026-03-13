@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VibeCoding — Console</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0a0a0f;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #fff;
+      overflow: hidden;
+    }
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(ellipse at 30% 20%, rgba(0,255,249,0.06) 0%, transparent 50%),
+                  radial-gradient(ellipse at 70% 80%, rgba(255,0,110,0.04) 0%, transparent 50%);
+      animation: drift 20s ease-in-out infinite;
+      z-index: -1;
+    }
+    @keyframes drift {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-2%, -2%) rotate(1deg); }
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      padding: 48px 40px;
+      background: linear-gradient(135deg, rgba(0,255,249,0.05), rgba(255,0,110,0.02));
+      border: 1px solid rgba(0,255,249,0.15);
+      border-radius: 16px;
+      backdrop-filter: blur(20px);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .logo h1 {
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #00fff9, #00b8b0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 2px;
+    }
+    .logo .subtitle {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 4px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,255,249,0.3), transparent);
+      margin: 24px 0;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .form-group input:focus {
+      border-color: rgba(0,255,249,0.5);
+      box-shadow: 0 0 20px rgba(0,255,249,0.1);
+    }
+    .form-group input::placeholder {
+      color: rgba(255,255,255,0.2);
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #00fff9, #00b8b0);
+      border: none;
+      border-radius: 10px;
+      color: #0a0a0f;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: transform 0.2s, box-shadow 0.3s;
+    }
+    .btn-login:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 30px rgba(0,255,249,0.3);
+    }
+    .btn-login:active {
+      transform: translateY(0);
+    }
+    .btn-login:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .error-msg {
+      display: none;
+      padding: 12px 16px;
+      background: rgba(255,0,110,0.15);
+      border: 1px solid rgba(255,0,110,0.3);
+      border-radius: 8px;
+      color: #ff6b9d;
+      font-size: 13px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .error-msg.show {
+      display: block;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* Particles */
+    .particle {
+      position: fixed;
+      width: 2px; height: 2px;
+      background: rgba(0,255,249,0.3);
+      border-radius: 50%;
+      animation: float linear infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Particles -->
+  <script>
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.animationDuration = 8 + Math.random() * 12 + 's';
+      p.style.animationDelay = Math.random() * 10 + 's';
+      p.style.width = p.style.height = 1 + Math.random() * 2 + 'px';
+      document.body.appendChild(p);
+    }
+  </script>
+
+  <div class="login-card">
+    <div class="logo">
+      <h1>⚡ VIBECODING</h1>
+      <div class="subtitle">Console</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="error-msg" id="error"></div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="email" placeholder="admin@vibecoding.by" autocomplete="email" autofocus>
+    </div>
+
+    <div class="form-group">
+      <label>Пароль</label>
+      <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+    </div>
+
+    <button class="btn-login" id="loginBtn" onclick="doLogin()">
+      ВОЙТИ
+    </button>
+
+    <div class="footer">
+      Appwrite Self-Hosted Console
+    </div>
+  </div>
+
+  <script>
+    const APPWRITE_ENDPOINT = '%%APPWRITE_ENDPOINT%%';
+
+    document.getElementById('password').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') doLogin();
+    });
+
+    async function doLogin() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('loginBtn');
+      const errorEl = document.getElementById('error');
+
+      if (!email || !password) {
+        errorEl.textContent = 'Введите email и пароль';
+        errorEl.classList.add('show');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'ВХОДИМ...';
+      errorEl.classList.remove('show');
+
+      try {
+        // Create session via Appwrite Account API
+        const res = await fetch(`${APPWRITE_ENDPOINT}/account/sessions/email`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Appwrite-Project': 'console',
+          },
+          credentials: 'include',
+          body: JSON.stringify({ email, password }),
+        });
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.message || `Ошибка авторизации (${res.status})`);
+        }
+
+        // Success - redirect to console
+        window.location.href = APPWRITE_ENDPOINT.replace('/v1', '/console');
+      } catch (e) {
+        errorEl.textContent = e.message;
+        errorEl.classList.add('show');
+        btn.disabled = false;
+        btn.textContent = 'ВОЙТИ';
+      }
+    }
+  </script>
+</body>
+</html>
