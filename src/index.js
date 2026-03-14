@@ -7,6 +7,7 @@
 
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { ListToolsRequestSchema, CallToolRequestSchema } from "@modelcontextprotocol/sdk/types.js";
 
 // ─── Config ───────────────────────────────────────────────
 const ENDPOINT = process.env.APPWRITE_ENDPOINT || "https://appwrite.vibecoding.by/v1";
@@ -335,9 +336,9 @@ const server = new Server(
   { capabilities: { tools: {} } }
 );
 
-server.setRequestHandler({ method: "tools/list" }, async () => ({ tools: TOOLS }));
+server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools: TOOLS }));
 
-server.setRequestHandler({ method: "tools/call" }, async (request) => {
+server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
   try {
     const result = await handleTool(name, args || {});
