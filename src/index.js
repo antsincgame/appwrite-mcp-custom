@@ -35,11 +35,12 @@ function resolveId(val) {
 
 async function appwriteFetch(path, opts = {}) {
   const url = `${ENDPOINT}${path}`;
+  const projectId = opts.projectId || "console";
   const headers = {
     "Content-Type": "application/json",
-    "X-Appwrite-Project": opts.projectId || "console",
-    "X-Appwrite-Mode": "admin",
+    "X-Appwrite-Project": projectId,
     "X-Appwrite-Response-Format": "1.6.0",
+    ...(projectId !== "console" ? { "X-Appwrite-Mode": "admin" } : {}),
     ...(sessionCookie ? { Cookie: sessionCookie } : {}),
     ...(opts.headers || {}),
   };
