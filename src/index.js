@@ -38,6 +38,7 @@ async function appwriteFetch(path, opts = {}) {
   const headers = {
     "Content-Type": "application/json",
     "X-Appwrite-Project": opts.projectId || "console",
+    "X-Appwrite-Mode": "admin",
     "X-Appwrite-Response-Format": "1.6.0",
     ...(sessionCookie ? { Cookie: sessionCookie } : {}),
     ...(opts.headers || {}),
